@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   AstorAI — Editorial System
+   ============================================================ */
+
+@layer base {
+  :root {
+    --ink: #0e0c0a;
+    --paper: #e5ddc8;
+    --gold: #b8956a;
+    --hair: rgba(184, 149, 106, 0.18);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 300;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(184, 149, 106, 0.3);
+    color: var(--paper);
+  }
+}
+
+@layer components {
+  /* ---------- 金色斜体高亮 — 3A 视觉签名 ---------- */
+  .em-gold {
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- 发丝线 ---------- */
+  .hair-t {
+    border-top: 1px solid var(--hair);
+  }
+  .hair-b {
+    border-bottom: 1px solid var(--hair);
+  }
+  .hair-x {
+    border-left: 1px solid var(--hair);
+    border-right: 1px solid var(--hair);
+  }
+
+  /* ---------- 章节标记 ---------- */
+  .smark-en {
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-style: italic;
+    font-size: clamp(15px, 2vw, 19px);
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .smark-cn {
+    font-size: clamp(14px, 1.8vw, 17px);
+    letter-spacing: 0.2em;
+    color: var(--paper);
+    white-space: nowrap;
+  }
+  .smark-n {
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    color: rgba(229, 221, 200, 0.2);
+    white-space: nowrap;
+  }
+
+  /* ---------- 描边按钮 + 翻转 ---------- */
+  .btn-line {
+    @apply relative inline-flex items-center justify-center overflow-hidden;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    background: transparent;
+    transition: color 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-line::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+  }
+  .btn-line:hover {
+    color: var(--ink);
+  }
+  .btn-line:hover::before {
+    transform: scaleX(1);
+  }
+  .btn-line-solid {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+  }
+  .btn-line-solid::before {
+    background: var(--paper);
+  }
+
+  /* ---------- pull quote ---------- */
+  .pull {
+    padding-left: clamp(20px, 3vw, 38px);
+    border-left: 2px solid var(--gold);
+  }
+
+  /* ---------- callout ---------- */
+  .callout {
+    border-top: 1px solid rgba(184, 149, 106, 0.32);
+    border-bottom: 1px solid rgba(184, 149, 106, 0.32);
+  }
+}
+
+@layer utilities {
+  /* ---------- 漂浮科技背景 ---------- */
+  .bg-canvas {
+    @apply fixed inset-0 overflow-hidden;
+    background: var(--ink);
+    z-index: 0;
+  }
+  .blob {
+    @apply absolute rounded-full;
+    filter: blur(90px);
+    will-change: transform;
+  }
+
+  /* ---------- 网格遮罩 ---------- */
+  .grid-mask {
+    -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 35%, #000 20%, transparent 72%);
+    mask-image: radial-gradient(ellipse 70% 55% at 50% 35%, #000 20%, transparent 72%);
+  }
+
+  /* ---------- 竖排文字 ---------- */
+  .writing-v {
+    writing-mode: vertical-rl;
+    letter-spacing: 0.3em;
+  }
+
+  /* ---------- 滚动条 ---------- */
+  .thin-scroll::-webkit-scrollbar {
+    height: 2px;
+  }
+  .thin-scroll::-webkit-scrollbar-track {
+    background: rgba(184, 149, 106, 0.1);
+  }
+  .thin-scroll::-webkit-scrollbar-thumb {
+    background: rgba(184, 149, 106, 0.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
